@@ -50,7 +50,7 @@ Text *textNew(char *charStr){
 
 Text *textAssign(Text *text){
 	if(text->reference == 0x80000000){
-		text->reference = 1;
+		return text;
 	}else{
 		text->reference ++;
 	}
@@ -59,7 +59,7 @@ Text *textAssign(Text *text){
 
 Text *textDel(Text *text){
 	if(text->reference == 0x80000000){
-			text->reference = 1;
+			return text;
 	}else{
 		text->reference --;
 			if(text->reference == 0x00){
@@ -160,45 +160,59 @@ int stringLength(String *string){
 
 String *stringRemoveWordNotContaining(String *string,char delimiters[]){
 	int i=0,j=0;
-	char isChar=string->text->string[i];
+	
 	String *stringA = stringNew(string->text);
+	stringA->length = 0;
+	
 	while(string->text->string[i]!=0){
-		if((string->text->string[i] != delimiters[0]) || (isChar <='a' && isChar >='z')){
-			 stringA->start;
-			 stringA->length = i-stringA->start+1 ;
-		}else if (string->text->string[i] == delimiters[0]){
-			string->start = stringA->length;
-			return stringA;
+	while(delimiters[j] != 0){
+		if(string->text->string[i] == delimiters[j]){
+				stringA->start = string->start;				
+				stringA->length = i-string->start;	
+				string->start = i;
+				string->length = string->length - stringA->length ;
+				return stringA;
 		}
+		j++;
+		}
+		j=0;
 		i++;
-		isChar=string->text->string[i];
 	}
+	
 	return stringA; 
 }
 
+
 String *stringRemoveWordContaining(String *string,char containSet[]){
-	int i=0,j=0,count;
+	int i=0,j=0,value=0;
+	char isChar=string->text->string[i];
 	String *stringA = stringNew(string->text);
+	stringA->length = 0;
+	stringA->start = string->start;
+
 	while(string->text->string[i]!=0){
 	while(containSet[j] != 0){
 		if(string->text->string[i] == containSet[j]){
-			 stringA->start;
-			 stringA->length= i +stringA->start+1;
-			 break;
+			string->start++;
+			string->length--;
+			stringA->length++;
+			goto here;
 		}else{
-			count++;
+			value++;	
 		}
 		j++;
-	}if(count<=string->text->string[i]){
-		break;
 	}
-		j = 0;
+	if(value>=stringA->length){
+		goto come;
+	}
+		here:
+		j=0;
 		i++;
 	}
-	string->start=stringA->length;
-	
-	return stringA;
+	come:
+	return stringA; 
 }
+
 
 int stringlsEqual(String *string1,String *string2){
 	int i = 0, count = 0;
@@ -229,4 +243,30 @@ int stringlsEqualCaseInsensitive(String *string1,String *string2){
 	return 1;
 
 }
+
+
+int stringCharAt(String *string,int relativeIndex){
+
+	if(relativeIndex < 0 || string->start+relativeIndex>=string->length){
+		return -1;
+	}else{
+		return string->text->string[string->start+relativeIndex];
+	}
+
+}
+
+int stringIsCharAtInSet(String *string,int relativeIndex,char set[]){
+	int i = 0;
+
+	while(set[i] != 0){
+		if(string->text->string[string->start+relativeIndex]==set[i]){
+			return 1;
+		}
+		i++;
+	}
+	return 0;
+
+}
+
+
 

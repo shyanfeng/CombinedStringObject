@@ -2,14 +2,10 @@
 #define __STRING_OBJECT_H__
 
 #include "Types.h"
+#include "Text.h"
 
-#define t (Text *)"\x00\x00\00\x80"
 #define isSpace(ch) (ch == ' ' || ch == '\t')
 
-typedef struct Text{
-	uint32 reference;
-	char string[0];	
-}Text;
 
 typedef struct String{
 	uint32 reference;
@@ -41,4 +37,6 @@ String *stringRemoveWordContaining(String *string,char containSet[]);
 int stringlsEqual(String *string1,String *string2);
 int stringlsEqualCaseInsensitive(String *string1,String *string2);
 
+int stringCharAt(String *string,int relativeIndex);
+int stringIsCharAtInSet(String *string,int relativeIndex,char set[]);
 #endif //__STRING_OBJECT_H__

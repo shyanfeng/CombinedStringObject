@@ -4,112 +4,105 @@
   :file: test_StringObject.c
 :successes:
 - :test: test_stringDump_explore
-  :line: 12
+  :line: 13
   :message: ''
 - :test: test_textDump_explore
-  :line: 26
+  :line: 27
   :message: ''
-- :test: test_textNew_copy_character_to_string
-  :line: 35
+- :test: test_textNew_copy_character_to_string_dynamic
+  :line: 36
+  :message: ''
+- :test: test_textNew_copy_character_to_string_static
+  :line: 44
   :message: ''
 - :test: test_textAssign_assign_character
-  :line: 43
+  :line: 52
+  :message: ''
+- :test: test_textAssign_assign_character_static
+  :line: 64
   :message: ''
 - :test: test_textDel_text_dynamic_delete_1
-  :line: 60
+  :line: 72
+  :message: ''
+- :test: test_textDel_text_static
+  :line: 83
   :message: ''
 - :test: test_textDel_text_dynamic_NULL
-  :line: 74
+  :line: 90
   :message: ''
-- :test: test_stringNew
-  :line: 91
+- :test: test_stringNew_dynamic
+  :line: 101
+  :message: ''
+- :test: test_stringNew_static
+  :line: 108
   :message: ''
 - :test: test_stringAssign
-  :line: 100
+  :line: 117
   :message: ''
 - :test: test_stringDel_1
-  :line: 113
-  :message: ''
-- :test: test_stringDel_null
   :line: 127
   :message: ''
+- :test: test_stringDel_null
+  :line: 137
+  :message: ''
 - :test: test_stringSkip
-  :line: 142
+  :line: 148
   :message: ''
 - :test: test_stringTrimLeft
-  :line: 152
+  :line: 157
   :message: ''
 - :test: test_stringTrimRight
-  :line: 161
+  :line: 165
   :message: ''
 - :test: test_stringTrim
-  :line: 170
+  :line: 173
   :message: ''
 - :test: test_stringRemoveChar
-  :line: 179
+  :line: 182
   :message: ''
 - :test: test_stringLength
-  :line: 189
+  :line: 192
   :message: ''
 - :test: test_stringRemoveWordNotContaining
-  :line: 198
+  :line: 200
   :message: ''
-- :test: test_stringRemoveWordContaining
+- :test: test_stringRemoveWordNotContaining_Bulldog
   :line: 212
   :message: ''
+- :test: test_stringRemoveWordNotContaining_Pearson
+  :line: 222
+  :message: ''
+- :test: test_stringRemoveWordNotContaining_baskinrobbin
+  :line: 233
+  :message: ''
+- :test: test_stringRemoveWordContaining
+  :line: 245
+  :message: ''
 - :test: test_stringlsEqual
-  :line: 227
+  :line: 260
   :message: ''
 - :test: test_stringlsEqualCaseInsensitive
-  :line: 244
+  :line: 277
+  :message: ''
+- :test: test_stringCharAt
+  :line: 294
+  :message: ''
+- :test: test_stringIsCharAtInSet
+  :line: 304
   :message: ''
 :failures: []
 :ignores: []
 :counts:
-  :total: 20
-  :passed: 20
+  :total: 29
+  :passed: 29
   :failed: 0
   :ignored: 0
 :stdout:
 - '[20] f_str[10]:hello world,start:0,len:100,string:hello world '
 - text[3]:dummy
 - text[1]:Bye
-- text[-2147483648]:HAHA
-- text[1]:Bye
-- text[2]:Bye
-- text[2]:Bye
-- text[1]:Bye
-- text[2]:Bye
-- text[2]:Bye
-- text[1]:Bye
-- text[1]:AAA
-- text[2]:AAA
-- text[2]:AAA
-- text[1]:AAA
-- (NULL)
-- text[1]:VVV
-- '[1] f_str[2]:VVV,start:0,len:3,string:VVV '
-- text[1]:VVV
-- '[1] f_str[2]:VVV,start:0,len:3,string:VVV '
-- '[2] f_str[2]:VVV,start:0,len:3,string:VVV '
-- text[1]:VVV
-- '[1] f_str[2]:VVV,start:0,len:3,string:VVV '
-- '[2] f_str[2]:VVV,start:0,len:3,string:VVV '
-- '[1] f_str[2]:VVV,start:0,len:3,string:VVV '
-- text[1]:VVV
-- '[1] f_str[2]:VVV,start:0,len:3,string:VVV '
-- '[2] f_str[2]:VVV,start:0,len:3,string:VVV '
-- '[1] f_str[2]:VVV,start:0,len:3,string:VVV '
-- 'NULL'
-- '[1] f_str[2]:VVV,start:2,len:1,string:V '
-- '[1] f_str[2]:   VVV,start:3,len:3,string:VVV '
-- '[1] f_str[2]:aaa           ,start:0,len:3,string:aaa '
-- '[1] f_str[2]:   VVV  ,start:3,len:3,string:VVV '
-- '[1] f_str[2]:a,start:1,len:0,string: '
-- '[1] f_str[2]:aliaaa,start:0,len:6,string:aliaaa '
-- '[1] f_str[3]:abcdefghi,start:0,len:4,string:abcd '
-- '[1] f_str[3]:abcdefghi,start:4,len:9,string:efghi '
-- '[1] f_str[3]:eiejj,start:0,len:3,string:eie '
-- '[1] f_str[3]:eiejj,start:3,len:5,string:jj '
+- '[1] f_str[3]:1234ABCD56,start:0,len:4,string:1234 '
+- '[1] f_str[3]:1234ABCD56,start:4,len:6,string:ABCD56 '
 - '[1] f_str[2]:halo,start:0,len:4,string:halo '
 - '[1] f_str[2]:halo,start:0,len:4,string:halo '
+- '[1] f_str[2]:hello,start:0,len:5,string:hello '
