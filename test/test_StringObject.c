@@ -244,16 +244,16 @@ void test_stringRemoveWordNotContaining_baskinrobbin(void){
 
 void test_stringRemoveWordContaining(void){
 
-		Text *new = textNew("1234ABCD56");
+		Text *new = textNew("abc56");
 		String *string1 = stringNew(new);
-		String *a = stringRemoveWordContaining(string1,"3214");
+		String *a = stringRemoveWordContaining(string1,"abc");
 		stringDump(a);
 		stringDump(string1);
 		
 		TEST_ASSERT_EQUAL(0,a->start);
-		TEST_ASSERT_EQUAL(4,a->length);
-		TEST_ASSERT_EQUAL(4,string1->start);
-		TEST_ASSERT_EQUAL(6,string1->length);
+		TEST_ASSERT_EQUAL(3,a->length);
+		TEST_ASSERT_EQUAL(3,string1->start);
+		TEST_ASSERT_EQUAL(2,string1->length);
 	
 }
 
@@ -292,13 +292,13 @@ void test_stringlsEqualCaseInsensitive(void){
 }
 
 void test_stringCharAt(void){
-		Text *new = textNew("hello");
+		Text *new = textNew("he&lo");
 		String *string1 = stringNew(new);
 		string1->start = 0;
 
 		stringDump(string1);
 		
-		TEST_ASSERT_EQUAL('l',stringCharAt(string1,2));
+		TEST_ASSERT_EQUAL('&',stringCharAt(string1,2));
 }
 
 void test_stringIsCharAtInSet(void){
@@ -313,7 +313,7 @@ void test_stringIsCharAtInSet(void){
 void test_stringSubstringInChar(void){
 		Text *new = textNew("abc12");
 		String *string = stringNew(new);
-		printf("%s\n",stringSubstringInChar(string,0,6));
+		printf("%s\n",stringSubstringInChar(string,0,5));
 		TEST_ASSERT_EQUAL_STRING(" ",stringSubstringInChar(string,0,6));
 }
 

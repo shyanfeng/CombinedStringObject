@@ -486,11 +486,11 @@ void test_stringRemoveWordContaining(void){
 
 
 
-  Text *new = textNew("1234ABCD56");
+  Text *new = textNew("abc56");
 
   String *string1 = stringNew(new);
 
-  String *a = stringRemoveWordContaining(string1,"3214");
+  String *a = stringRemoveWordContaining(string1,"abc");
 
   stringDump(a);
 
@@ -500,11 +500,11 @@ void test_stringRemoveWordContaining(void){
 
   UnityAssertEqualNumber((_U_SINT)((0)), (_U_SINT)((a->start)), (((void *)0)), (_U_UINT)253, UNITY_DISPLAY_STYLE_INT);
 
-  UnityAssertEqualNumber((_U_SINT)((4)), (_U_SINT)((a->length)), (((void *)0)), (_U_UINT)254, UNITY_DISPLAY_STYLE_INT);
+  UnityAssertEqualNumber((_U_SINT)((3)), (_U_SINT)((a->length)), (((void *)0)), (_U_UINT)254, UNITY_DISPLAY_STYLE_INT);
 
-  UnityAssertEqualNumber((_U_SINT)((4)), (_U_SINT)((string1->start)), (((void *)0)), (_U_UINT)255, UNITY_DISPLAY_STYLE_INT);
+  UnityAssertEqualNumber((_U_SINT)((3)), (_U_SINT)((string1->start)), (((void *)0)), (_U_UINT)255, UNITY_DISPLAY_STYLE_INT);
 
-  UnityAssertEqualNumber((_U_SINT)((6)), (_U_SINT)((string1->length)), (((void *)0)), (_U_UINT)256, UNITY_DISPLAY_STYLE_INT);
+  UnityAssertEqualNumber((_U_SINT)((2)), (_U_SINT)((string1->length)), (((void *)0)), (_U_UINT)256, UNITY_DISPLAY_STYLE_INT);
 
 
 
@@ -582,7 +582,7 @@ void test_stringlsEqualCaseInsensitive(void){
 
 void test_stringCharAt(void){
 
-  Text *new = textNew("hello");
+  Text *new = textNew("he&lo");
 
   String *string1 = stringNew(new);
 
@@ -594,7 +594,7 @@ void test_stringCharAt(void){
 
 
 
-  UnityAssertEqualNumber((_U_SINT)(('l')), (_U_SINT)((stringCharAt(string1,2))), (((void *)0)), (_U_UINT)301, UNITY_DISPLAY_STYLE_INT);
+  UnityAssertEqualNumber((_U_SINT)(('&')), (_U_SINT)((stringCharAt(string1,2))), (((void *)0)), (_U_UINT)301, UNITY_DISPLAY_STYLE_INT);
 
 }
 
@@ -624,7 +624,7 @@ void test_stringSubstringInChar(void){
 
   String *string = stringNew(new);
 
-  printf("%s\n",stringSubstringInChar(string,0,6));
+  printf("%s\n",stringSubstringInChar(string,0,5));
 
   UnityAssertEqualString((const char*)(" "), (const char*)(stringSubstringInChar(string,0,6)), (((void *)0)), (_U_UINT)317);
 

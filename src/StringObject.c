@@ -190,7 +190,7 @@ String *stringRemoveWordContaining(String *string,char containSet[]){
 	String *stringA = stringNew(string->text);
 	stringA->length = 0;
 	stringA->start = string->start;
-
+	
 	while(string->text->string[i]!=0){
 	while(containSet[j] != 0){
 		if(string->text->string[i] == containSet[j]){
@@ -199,10 +199,11 @@ String *stringRemoveWordContaining(String *string,char containSet[]){
 			stringA->length++;
 			goto here;
 		}else{
-			value++;	
+			value++;
 		}
 		j++;
 	}
+
 	if(value>=stringA->length){
 		goto come;
 	}
@@ -211,7 +212,7 @@ String *stringRemoveWordContaining(String *string,char containSet[]){
 		i++;
 	}
 	come:
-	return stringA; 
+	return stringA; 		
 }
 
 
@@ -248,11 +249,12 @@ int stringlsEqualCaseInsensitive(String *string1,String *string2){
 
 int stringCharAt(String *string,int relativeIndex){
 
-	if(relativeIndex < 0 || string->start+relativeIndex>=string->length){
+	if(relativeIndex < 0 && string->start+relativeIndex>=string->length){
 		return -1;
 	}else{
 		return string->text->string[string->start+relativeIndex];
 	}
+	
 
 }
 

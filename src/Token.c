@@ -3,7 +3,8 @@
 #include "CharSet.h"
 #include "StringObject.h"
 #include <malloc.h>
-
+#include "ErrorCode.h"
+#include "CException.h"
 #define MAIN_OPERATOR_TABLE_SIZE (sizeof(mainOperatorTable)/sizeof(OperatorInfo))
 #define ALTERNATIVE_OPERATOR_TABLE_SIZE (sizeof(alternativeOperatorTable)/sizeof(OperatorInfo))
 
@@ -101,7 +102,7 @@ Operator *operatorNewByID(OperatorID id) {
  *   name is the name of the identifier.
  */
 Identifier *identifierNew(Text *name) {
-  Identifier *identifier = (Identifier *)malloc(sizeof(name));
+  Identifier *identifier = malloc(sizeof(name));
   
   identifier->type = IDENTIFIER_TOKEN;
   identifier->number->value = 0;
@@ -121,19 +122,66 @@ Identifier *identifierNew(Text *name) {
  *    Number, Operator, and Identifier tokens
  */
 Token *getToken(String *str) {
-	//check if is space;
+	stringTrimLeft(str);
 	/*
-	while(str->text->string[i] != 0){
-		if(str->text->string[i] == " " || str->text->string[i] == "\t"){
-			str->start++;
-			str->length--;
-			break;
-		}
-		i++;
-	}
+	*	Test if the char is a number!
 	*/
+	if(stringIsCharAtInSet(str,str->start,numberSet)){
+		int value;
+	
+		return (Token *)numberNew(stringToInteger(str));
+	}
+	
+	/*
+	*	Test if the char is a operator
+	*/
+	
+	else if(stringIsCharAtInSet(str,str->start,operatorSet)){
+		char operators[3];
+		operators[0] = (char)stringRemoveChar(str);
+		operators[1] = 0;
+		
+			if(operators[0] == stringCharAt(str,0)){
+				if(stringCharAt(str,0) == '&'){
+					operators[1] = (char)stringRemoveChar(str);
+					operators[2] = 0;
+					return (Token*)operatorNewBySymbol(operators);
+				}else if(stringCharAt(str,0) == '|'){
+			
+					operators[1] = (char)stringRemoveChar(str);
+					operators[2] = 0;
+					return (Token*)operatorNewBySymbol(operators);
+				}else{
+					Throw(ERR_NUMBER_NOT_WELL_FORMED);
+			
+			}
+			}
+	
+		return (Token*)operatorNewBySymbol(operators);
+	}
+	
+	/*
+	*	Test if the char is a alphabet!
+	*/
+	
+	else if(stringIsCharAtInSet(str,str->start,alphabetSet)){
+		String *string;
+		if((stringIsCharAtInSet(str,str->start,alphabetSet)) == (stringIsCharAtInSet(str,str->start,numberSet))){
+			Throw(ERR_NUMBER_NOT_WELL_FORMED);
+		}else{
+			string = stringRemoveWordContaining(str,alphabetSet);
+		}
+	
+		return (Token *)identifierNew(stringSubstringInText(string,0,string->length));
+	}
+	
+	
 
- 
+	
+	
 }
+
+
+
 
 
