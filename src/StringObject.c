@@ -23,7 +23,7 @@ void stringDump(String *string){
 	}
 	if(string->text != NULL){
 		int actualLength;
-			fullString = string->text->string; 
+			fullString = string->text->string;      // &string->text->string[string->start];
 		index = string->start;
 		if(index <= strlen(fullString)){
 		actualString = &fullString[index];
@@ -136,5 +136,97 @@ void stringTrim(String *string){
 	stringTrimLeft(string);
 	stringTrimRight(string);
 		
+}
+
+
+int stringRemoveChar(String *string){
+	int i;
+	char StringStart;
+	StringStart = string->text->string[string->start];
+	if(string->text->string[string->start] != string->text->string[string->length] > string->text->string[0]) {
+			string->start++;
+			string->length--;
+		return StringStart;
+	}else{
+		return -1;
+	}
+}
+
+int stringLength(String *string){
+	return string->length;
+}
+
+
+
+String *stringRemoveWordNotContaining(String *string,char delimiters[]){
+	int i=0,j=0;
+	char isChar=string->text->string[i];
+	String *stringA = stringNew(string->text);
+	while(string->text->string[i]!=0){
+		if((string->text->string[i] != delimiters[0]) || (isChar <='a' && isChar >='z')){
+			 stringA->start;
+			 stringA->length = i-stringA->start+1 ;
+		}else if (string->text->string[i] == delimiters[0]){
+			string->start = stringA->length;
+			return stringA;
+		}
+		i++;
+		isChar=string->text->string[i];
+	}
+	return stringA; 
+}
+
+String *stringRemoveWordContaining(String *string,char containSet[]){
+	int i=0,j=0,count;
+	String *stringA = stringNew(string->text);
+	while(string->text->string[i]!=0){
+	while(containSet[j] != 0){
+		if(string->text->string[i] == containSet[j]){
+			 stringA->start;
+			 stringA->length= i +stringA->start+1;
+			 break;
+		}else{
+			count++;
+		}
+		j++;
+	}if(count<=string->text->string[i]){
+		break;
+	}
+		j = 0;
+		i++;
+	}
+	string->start=stringA->length;
+	
+	return stringA;
+}
+
+int stringlsEqual(String *string1,String *string2){
+	int i = 0, count = 0;
+	int j = 0;
+	for(i = string1->start, j = string2->start ; i<string1->length || j<string2->length; i++,j++){
+		if(string1->text->string[i] != string2->text->string[j]){
+			return 0;
+		}
+	}
+	return 1;
+}
+
+int stringlsEqualCaseInsensitive(String *string1,String *string2){
+	int i =0 ,j = 0;
+	
+	for(i = 0; string1->text->string[i];i++){
+		string1->text->string[i] = tolower(string1->text->string[i]);
+	}
+	for(i = 0; string2->text->string[i];i++){
+		string2->text->string[i] = tolower(string2->text->string[i]);
+	}
+	
+	for(i = string1->start, j = string2->start ; i<string1->length || j<string2->length; i++,j++){
+		if(string1->text->string[i] != string2->text->string[j]){
+			return 0;
+		}
+	}
+	return 1;
+
 }
 

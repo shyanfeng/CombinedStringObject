@@ -349,3 +349,167 @@ void test_stringTrim(void){
   UnityAssertEqualNumber((_U_SINT)((0x03)), (_U_SINT)((string1->length)), (((void *)0)), (_U_UINT)176, UNITY_DISPLAY_STYLE_INT);
 
 }
+
+
+
+void test_stringRemoveChar(void){
+
+  char character;
+
+  String *string1 = stringNew(textNew("a"));
+
+  stringRemoveChar(string1);
+
+  character = stringRemoveChar(string1);
+
+  stringDump(string1);
+
+  UnityAssertEqualNumber((_U_SINT)((0)), (_U_SINT)((string1->length)), (((void *)0)), (_U_UINT)185, UNITY_DISPLAY_STYLE_INT);
+
+  UnityAssertEqualNumber((_U_SINT)((-1)), (_U_SINT)((character)), (((void *)0)), (_U_UINT)186, UNITY_DISPLAY_STYLE_INT);
+
+}
+
+
+
+void test_stringLength(void){
+
+  char character;
+
+  String *string1 = stringNew(textNew("aliaaa"));
+
+  character = stringLength(string1);
+
+  stringDump(string1);
+
+
+
+  UnityAssertEqualNumber((_U_SINT)((6)), (_U_SINT)((string1->length)), (((void *)0)), (_U_UINT)195, UNITY_DISPLAY_STYLE_INT);
+
+}
+
+
+
+void test_stringRemoveWordNotContaining(void){
+
+
+
+  Text *new = textNew("abcdefghi");
+
+  String *string1 = stringNew(new);
+
+  String *a = stringRemoveWordNotContaining(string1,"ei");
+
+  stringDump(a);
+
+  stringDump(string1);
+
+  UnityAssertEqualNumber((_U_SINT)((0)), (_U_SINT)((a->start)), (((void *)0)), (_U_UINT)205, UNITY_DISPLAY_STYLE_INT);
+
+  UnityAssertEqualNumber((_U_SINT)((4)), (_U_SINT)((a->length)), (((void *)0)), (_U_UINT)206, UNITY_DISPLAY_STYLE_INT);
+
+  UnityAssertEqualNumber((_U_SINT)((4)), (_U_SINT)((string1->start)), (((void *)0)), (_U_UINT)207, UNITY_DISPLAY_STYLE_INT);
+
+  UnityAssertEqualNumber((_U_SINT)((9)), (_U_SINT)((string1->length)), (((void *)0)), (_U_UINT)208, UNITY_DISPLAY_STYLE_INT);
+
+}
+
+
+
+
+
+void test_stringRemoveWordContaining(void){
+
+
+
+  Text *new = textNew("eiejj");
+
+  String *string1 = stringNew(new);
+
+  String *a = stringRemoveWordContaining(string1,"ei");
+
+  stringDump(a);
+
+  stringDump(string1);
+
+
+
+  UnityAssertEqualNumber((_U_SINT)((0)), (_U_SINT)((a->start)), (((void *)0)), (_U_UINT)220, UNITY_DISPLAY_STYLE_INT);
+
+  UnityAssertEqualNumber((_U_SINT)((3)), (_U_SINT)((a->length)), (((void *)0)), (_U_UINT)221, UNITY_DISPLAY_STYLE_INT);
+
+  UnityAssertEqualNumber((_U_SINT)((3)), (_U_SINT)((string1->start)), (((void *)0)), (_U_UINT)222, UNITY_DISPLAY_STYLE_INT);
+
+  UnityAssertEqualNumber((_U_SINT)((5)), (_U_SINT)((string1->length)), (((void *)0)), (_U_UINT)223, UNITY_DISPLAY_STYLE_INT);
+
+
+
+}
+
+
+
+void test_stringlsEqual(void){
+
+  int input;
+
+  Text *name2;
+
+  Text *name3;
+
+  name2 = textNew("samsung");
+
+  String *string1 = stringNew(name2);
+
+  string1->start = string1->start+3;
+
+  string1->length = string1->length-3;
+
+  name3 = textNew("sung");
+
+  String *string2 = stringNew(name3);
+
+
+
+  input = stringlsEqual(string1,string2);
+
+
+
+  UnityAssertEqualNumber((_U_SINT)((1)), (_U_SINT)((input)), (((void *)0)), (_U_UINT)240, UNITY_DISPLAY_STYLE_INT);
+
+
+
+}
+
+
+
+void test_stringlsEqualCaseInsensitive(void){
+
+  int input;
+
+  Text *name2;
+
+  Text *name3;
+
+  name2 = textNew("HAlo");
+
+  String *string1 = stringNew(name2);
+
+  name3 = textNew("halO");
+
+  String *string2 = stringNew(name3);
+
+
+
+  input = stringlsEqualCaseInsensitive(string1,string2);
+
+  stringDump(string1);
+
+  stringDump(string2);
+
+
+
+  UnityAssertEqualNumber((_U_SINT)((1)), (_U_SINT)((input)), (((void *)0)), (_U_UINT)257, UNITY_DISPLAY_STYLE_INT);
+
+
+
+}

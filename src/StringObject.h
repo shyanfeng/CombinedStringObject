@@ -34,4 +34,11 @@ void stringTrimLeft(String *string);
 void stringTrimRight(String *string);
 void stringTrim(String *string);
 
+int stringRemoveChar(String *string);
+int stringLength(String *string);
+String *stringRemoveWordNotContaining(String *string,char delimiters[]);
+String *stringRemoveWordContaining(String *string,char containSet[]);
+int stringlsEqual(String *string1,String *string2);
+int stringlsEqualCaseInsensitive(String *string1,String *string2);
+
 #endif //__STRING_OBJECT_H__

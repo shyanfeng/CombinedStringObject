@@ -45,11 +45,29 @@
 - :test: test_stringTrim
   :line: 170
   :message: ''
+- :test: test_stringRemoveChar
+  :line: 179
+  :message: ''
+- :test: test_stringLength
+  :line: 189
+  :message: ''
+- :test: test_stringRemoveWordNotContaining
+  :line: 198
+  :message: ''
+- :test: test_stringRemoveWordContaining
+  :line: 212
+  :message: ''
+- :test: test_stringlsEqual
+  :line: 227
+  :message: ''
+- :test: test_stringlsEqualCaseInsensitive
+  :line: 244
+  :message: ''
 :failures: []
 :ignores: []
 :counts:
-  :total: 14
-  :passed: 14
+  :total: 20
+  :passed: 20
   :failed: 0
   :ignored: 0
 :stdout:
@@ -87,3 +105,11 @@
 - '[1] f_str[2]:   VVV,start:3,len:3,string:VVV '
 - '[1] f_str[2]:aaa           ,start:0,len:3,string:aaa '
 - '[1] f_str[2]:   VVV  ,start:3,len:3,string:VVV '
+- '[1] f_str[2]:a,start:1,len:0,string: '
+- '[1] f_str[2]:aliaaa,start:0,len:6,string:aliaaa '
+- '[1] f_str[3]:abcdefghi,start:0,len:4,string:abcd '
+- '[1] f_str[3]:abcdefghi,start:4,len:9,string:efghi '
+- '[1] f_str[3]:eiejj,start:0,len:3,string:eie '
+- '[1] f_str[3]:eiejj,start:3,len:5,string:jj '
+- '[1] f_str[2]:halo,start:0,len:4,string:halo '
+- '[1] f_str[2]:halo,start:0,len:4,string:halo '

@@ -48,6 +48,12 @@ extern void test_stringSkip(void);
 extern void test_stringTrimLeft(void);
 extern void test_stringTrimRight(void);
 extern void test_stringTrim(void);
+extern void test_stringRemoveChar(void);
+extern void test_stringLength(void);
+extern void test_stringRemoveWordNotContaining(void);
+extern void test_stringRemoveWordContaining(void);
+extern void test_stringlsEqual(void);
+extern void test_stringlsEqualCaseInsensitive(void);
 
 
 //=======Test Reset Option=====
@@ -77,6 +83,12 @@ int main(void)
   RUN_TEST(test_stringTrimLeft, 152);
   RUN_TEST(test_stringTrimRight, 161);
   RUN_TEST(test_stringTrim, 170);
+  RUN_TEST(test_stringRemoveChar, 179);
+  RUN_TEST(test_stringLength, 189);
+  RUN_TEST(test_stringRemoveWordNotContaining, 198);
+  RUN_TEST(test_stringRemoveWordContaining, 212);
+  RUN_TEST(test_stringlsEqual, 227);
+  RUN_TEST(test_stringlsEqualCaseInsensitive, 244);
 
   return (UnityEnd());
 }
