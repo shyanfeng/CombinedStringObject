@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "Token.h"
 #include "CharSet.h"
+#include "StringObject.h"
 #include <malloc.h>
 
 #define MAIN_OPERATOR_TABLE_SIZE (sizeof(mainOperatorTable)/sizeof(OperatorInfo))
@@ -77,7 +78,19 @@ Operator *operatorNewBySymbol(char *symbol) {
  *          and CLOSING_BRACKET_OP.
  */
 Operator *operatorNewByID(OperatorID id) {
-  return NULL;
+	Operator *operators = malloc(sizeof(Operator));
+	
+	operators->type = OPERATOR_TOKEN;
+	int i = 0;
+	while(mainOperatorTable[i].id != 0){
+		if(mainOperatorTable[i].id == id){
+			operators->info = &mainOperatorTable[i];
+			  return operators;
+		}
+		i++;
+	}
+
+  return operators;
 }
 
 /**
@@ -88,7 +101,7 @@ Operator *operatorNewByID(OperatorID id) {
  *   name is the name of the identifier.
  */
 Identifier *identifierNew(Text *name) {
-  Identifier *identifier = malloc(sizeof(Identifier));
+  Identifier *identifier = (Identifier *)malloc(sizeof(name));
   
   identifier->type = IDENTIFIER_TOKEN;
   identifier->number->value = 0;
@@ -108,5 +121,19 @@ Identifier *identifierNew(Text *name) {
  *    Number, Operator, and Identifier tokens
  */
 Token *getToken(String *str) {
-  return NULL;
+	//check if is space;
+	/*
+	while(str->text->string[i] != 0){
+		if(str->text->string[i] == " " || str->text->string[i] == "\t"){
+			str->start++;
+			str->length--;
+			break;
+		}
+		i++;
+	}
+	*/
+
+ 
 }
+
+

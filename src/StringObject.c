@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <malloc.h>
+#include <stdlib.h>
 
 void textDump(Text *text){
 	if(text== NULL){
@@ -267,6 +268,44 @@ int stringIsCharAtInSet(String *string,int relativeIndex,char set[]){
 	return 0;
 
 }
+
+char *stringSubstringInChar(String *string, int start,int length){
+
+	char *charText = malloc(sizeof(char)*(length+1));
+	int i = start,j = 0;
+	if(length>string->length){
+		return " ";
+	}else{
+		while(i<length+start){
+			charText[j] = string->text->string[i];
+			i++;
+			j++;
+		}
+	}
+	charText[j] = 0;
+	return charText;
+}
+
+Text *stringSubstringInText(String *string,int start,int length){
+	char *charStr = stringSubstringInChar(string,start,length);
+	Text *text = textNew(charStr);
+	free(charStr);
+	return text;
+}
+
+int stringToInteger(String *string){
+	int starter,lengther,integerChar;
+	starter = string->start;
+	lengther = string->length;
+	
+	char *charStr = stringSubstringInChar(string,starter,lengther); 
+	integerChar = atoi(charStr);
+	
+	free(charStr);
+	
+	return integerChar;
+}
+
 
 
 

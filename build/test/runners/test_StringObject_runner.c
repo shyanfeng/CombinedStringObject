@@ -63,6 +63,9 @@ extern void test_stringlsEqual(void);
 extern void test_stringlsEqualCaseInsensitive(void);
 extern void test_stringCharAt(void);
 extern void test_stringIsCharAtInSet(void);
+extern void test_stringSubstringInChar(void);
+extern void test_stringSubstringInText(void);
+extern void test_stringToInteger(void);
 
 
 //=======Test Reset Option=====
@@ -107,6 +110,9 @@ int main(void)
   RUN_TEST(test_stringlsEqualCaseInsensitive, 277);
   RUN_TEST(test_stringCharAt, 294);
   RUN_TEST(test_stringIsCharAtInSet, 304);
+  RUN_TEST(test_stringSubstringInChar, 313);
+  RUN_TEST(test_stringSubstringInText, 320);
+  RUN_TEST(test_stringToInteger, 329);
 
   return (UnityEnd());
 }

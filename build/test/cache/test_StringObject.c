@@ -615,3 +615,57 @@ void test_stringIsCharAtInSet(void){
   UnityAssertEqualNumber((_U_SINT)((1)), (_U_SINT)((stringIsCharAtInSet(string1,1,"efg"))), (((void *)0)), (_U_UINT)310, UNITY_DISPLAY_STYLE_INT);
 
 }
+
+
+
+void test_stringSubstringInChar(void){
+
+  Text *new = textNew("abc12");
+
+  String *string = stringNew(new);
+
+  printf("%s\n",stringSubstringInChar(string,0,6));
+
+  UnityAssertEqualString((const char*)(" "), (const char*)(stringSubstringInChar(string,0,6)), (((void *)0)), (_U_UINT)317);
+
+}
+
+
+
+void test_stringSubstringInText(void){
+
+  Text *new = textNew("abc12");
+
+  String *string = stringNew(new);
+
+  Text *news = stringSubstringInText(string,0,2);
+
+
+
+  UnityAssertEqualString((const char*)("ab"), (const char*)(news->string), (((void *)0)), (_U_UINT)325);
+
+  UnityAssertEqualNumber((_U_SINT)((1)), (_U_SINT)((news->reference)), (((void *)0)), (_U_UINT)326, UNITY_DISPLAY_STYLE_INT);
+
+}
+
+
+
+void test_stringToInteger(void){
+
+  int a;
+
+  Text *new = textNew("abc12");
+
+  String *string = stringNew(new);
+
+  string->start = 3;
+
+  string->length = 2;
+
+  a = stringToInteger(string);
+
+
+
+  UnityAssertEqualNumber((_U_SINT)((12)), (_U_SINT)((a)), (((void *)0)), (_U_UINT)337, UNITY_DISPLAY_STYLE_INT);
+
+}

@@ -39,3 +39,12 @@ void test_operatorNewBySymbol(void){
 	TEST_ASSERT_EQUAL(0,a);
 	
 }
+
+void test_operatorNewByID(void){
+
+	Operator *operatorss= operatorNewByID(ADD_OP);
+	TEST_ASSERT_EQUAL(ADD_OP,operatorss->info->id);
+	TEST_ASSERT_EQUAL(OPERATOR_TOKEN,operatorss->type);
+
+	
+}

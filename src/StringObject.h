@@ -39,4 +39,8 @@ int stringlsEqualCaseInsensitive(String *string1,String *string2);
 
 int stringCharAt(String *string,int relativeIndex);
 int stringIsCharAtInSet(String *string,int relativeIndex,char set[]);
+
+int stringToInteger(String *string);
+char *stringSubstringInChar(String *string, int start,int length);
+Text *stringSubstringInText(String *string,int start,int length);
 #endif //__STRING_OBJECT_H__

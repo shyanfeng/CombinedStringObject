@@ -90,11 +90,20 @@
 - :test: test_stringIsCharAtInSet
   :line: 304
   :message: ''
+- :test: test_stringSubstringInChar
+  :line: 313
+  :message: ''
+- :test: test_stringSubstringInText
+  :line: 320
+  :message: ''
+- :test: test_stringToInteger
+  :line: 329
+  :message: ''
 :failures: []
 :ignores: []
 :counts:
-  :total: 29
-  :passed: 29
+  :total: 32
+  :passed: 32
   :failed: 0
   :ignored: 0
 :stdout:
@@ -106,3 +115,4 @@
 - '[1] f_str[2]:halo,start:0,len:4,string:halo '
 - '[1] f_str[2]:halo,start:0,len:4,string:halo '
 - '[1] f_str[2]:hello,start:0,len:5,string:hello '
+- ' '

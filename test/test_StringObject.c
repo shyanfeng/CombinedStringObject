@@ -309,3 +309,33 @@ void test_stringIsCharAtInSet(void){
 	
 		TEST_ASSERT_EQUAL(1,stringIsCharAtInSet(string1,1,"efg"));
 }
+
+void test_stringSubstringInChar(void){
+		Text *new = textNew("abc12");
+		String *string = stringNew(new);
+		printf("%s\n",stringSubstringInChar(string,0,6));
+		TEST_ASSERT_EQUAL_STRING(" ",stringSubstringInChar(string,0,6));
+}
+
+void test_stringSubstringInText(void){
+		Text *new = textNew("abc12");
+		String *string = stringNew(new);
+		Text *news = stringSubstringInText(string,0,2);
+		
+		TEST_ASSERT_EQUAL_STRING("ab",news->string);
+		TEST_ASSERT_EQUAL(1,news->reference);
+}
+
+void test_stringToInteger(void){
+		int a;
+		Text *new = textNew("abc12");
+		String *string = stringNew(new);
+		string->start = 3;
+		string->length = 2;
+		a = stringToInteger(string);
+
+		TEST_ASSERT_EQUAL(12,a);
+}
+
+
+
