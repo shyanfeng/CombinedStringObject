@@ -1,0 +1,89 @@
+---
+:source:
+  :path: test
+  :file: test_StringObject.c
+:successes:
+- :test: test_stringDump_explore
+  :line: 12
+  :message: ''
+- :test: test_textDump_explore
+  :line: 26
+  :message: ''
+- :test: test_textNew_copy_character_to_string
+  :line: 35
+  :message: ''
+- :test: test_textAssign_assign_character
+  :line: 43
+  :message: ''
+- :test: test_textDel_text_dynamic_delete_1
+  :line: 60
+  :message: ''
+- :test: test_textDel_text_dynamic_NULL
+  :line: 74
+  :message: ''
+- :test: test_stringNew
+  :line: 91
+  :message: ''
+- :test: test_stringAssign
+  :line: 100
+  :message: ''
+- :test: test_stringDel_1
+  :line: 113
+  :message: ''
+- :test: test_stringDel_null
+  :line: 127
+  :message: ''
+- :test: test_stringSkip
+  :line: 142
+  :message: ''
+- :test: test_stringTrimLeft
+  :line: 152
+  :message: ''
+- :test: test_stringTrimRight
+  :line: 161
+  :message: ''
+- :test: test_stringTrim
+  :line: 170
+  :message: ''
+:failures: []
+:ignores: []
+:counts:
+  :total: 14
+  :passed: 14
+  :failed: 0
+  :ignored: 0
+:stdout:
+- '[20] f_str[10]:hello world,start:0,len:100,string:hello world '
+- text[3]:dummy
+- text[1]:Bye
+- text[-2147483648]:HAHA
+- text[1]:Bye
+- text[2]:Bye
+- text[2]:Bye
+- text[1]:Bye
+- text[2]:Bye
+- text[2]:Bye
+- text[1]:Bye
+- text[1]:AAA
+- text[2]:AAA
+- text[2]:AAA
+- text[1]:AAA
+- (NULL)
+- text[1]:VVV
+- '[1] f_str[2]:VVV,start:0,len:3,string:VVV '
+- text[1]:VVV
+- '[1] f_str[2]:VVV,start:0,len:3,string:VVV '
+- '[2] f_str[2]:VVV,start:0,len:3,string:VVV '
+- text[1]:VVV
+- '[1] f_str[2]:VVV,start:0,len:3,string:VVV '
+- '[2] f_str[2]:VVV,start:0,len:3,string:VVV '
+- '[1] f_str[2]:VVV,start:0,len:3,string:VVV '
+- text[1]:VVV
+- '[1] f_str[2]:VVV,start:0,len:3,string:VVV '
+- '[2] f_str[2]:VVV,start:0,len:3,string:VVV '
+- '[1] f_str[2]:VVV,start:0,len:3,string:VVV '
+- 'NULL'
+- '[1] f_str[2]:VVV,start:2,len:1,string:V '
+- '[1] f_str[2]:   VVV,start:3,len:3,string:VVV '
+- '[1] f_str[2]:aaa           ,start:0,len:3,string:aaa '
+- '[1] f_str[2]:   VVV  ,start:3,len:3,string:VVV '
