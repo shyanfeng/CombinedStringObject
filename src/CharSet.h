@@ -7,4 +7,5 @@ extern char octalSet[];
 extern char alphabetSet[];
 extern char alphaNumericSet[];
 extern char operatorSet[];
+
 #endif // CharSet_H

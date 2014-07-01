@@ -4,114 +4,89 @@
   :file: test_StringObject.c
 :successes:
 - :test: test_stringDump_explore
-  :line: 13
-  :message: ''
-- :test: test_textDump_explore
-  :line: 27
-  :message: ''
-- :test: test_textNew_copy_character_to_string_dynamic
-  :line: 36
-  :message: ''
-- :test: test_textNew_copy_character_to_string_static
-  :line: 44
-  :message: ''
-- :test: test_textAssign_assign_character
-  :line: 52
-  :message: ''
-- :test: test_textAssign_assign_character_static
-  :line: 64
-  :message: ''
-- :test: test_textDel_text_dynamic_delete_1
-  :line: 72
-  :message: ''
-- :test: test_textDel_text_static
-  :line: 83
-  :message: ''
-- :test: test_textDel_text_dynamic_NULL
-  :line: 90
+  :line: 15
   :message: ''
 - :test: test_stringNew_dynamic
-  :line: 101
+  :line: 29
   :message: ''
 - :test: test_stringNew_static
-  :line: 108
+  :line: 36
   :message: ''
 - :test: test_stringAssign
-  :line: 117
+  :line: 45
   :message: ''
 - :test: test_stringDel_1
-  :line: 127
+  :line: 55
   :message: ''
 - :test: test_stringDel_null
-  :line: 137
+  :line: 65
   :message: ''
 - :test: test_stringSkip
-  :line: 148
+  :line: 76
   :message: ''
 - :test: test_stringTrimLeft
-  :line: 157
+  :line: 87
   :message: ''
 - :test: test_stringTrimRight
-  :line: 165
+  :line: 97
   :message: ''
 - :test: test_stringTrim
-  :line: 173
+  :line: 107
   :message: ''
 - :test: test_stringRemoveChar
-  :line: 182
+  :line: 116
   :message: ''
 - :test: test_stringLength
-  :line: 192
+  :line: 126
   :message: ''
 - :test: test_stringRemoveWordNotContaining
-  :line: 200
+  :line: 134
   :message: ''
 - :test: test_stringRemoveWordNotContaining_Bulldog
-  :line: 212
+  :line: 146
   :message: ''
 - :test: test_stringRemoveWordNotContaining_Pearson
-  :line: 222
+  :line: 156
   :message: ''
 - :test: test_stringRemoveWordNotContaining_baskinrobbin
-  :line: 233
+  :line: 167
   :message: ''
 - :test: test_stringRemoveWordContaining
-  :line: 245
+  :line: 179
   :message: ''
-- :test: test_stringlsEqual
-  :line: 260
+- :test: test_stringIsEqual
+  :line: 194
   :message: ''
-- :test: test_stringlsEqualCaseInsensitive
-  :line: 277
+- :test: test_stringIsEqualCaseInsensitive
+  :line: 211
   :message: ''
 - :test: test_stringCharAt
-  :line: 294
+  :line: 228
   :message: ''
 - :test: test_stringIsCharAtInSet
-  :line: 304
+  :line: 238
   :message: ''
 - :test: test_stringSubstringInChar
-  :line: 313
+  :line: 247
   :message: ''
 - :test: test_stringSubstringInText
-  :line: 320
+  :line: 254
   :message: ''
 - :test: test_stringToInteger
-  :line: 329
+  :line: 263
   :message: ''
 :failures: []
 :ignores: []
 :counts:
-  :total: 32
-  :passed: 32
+  :total: 24
+  :passed: 24
   :failed: 0
   :ignored: 0
 :stdout:
 - '[20] f_str[10]:hello world,start:0,len:100,string:hello world '
-- text[3]:dummy
-- text[1]:Bye
-- '[1] f_str[3]:abc56,start:0,len:3,string:abc '
-- '[1] f_str[3]:abc56,start:3,len:2,string:56 '
+- '[1] f_str[2]:VVV,start:2,len:1,string:V '
+- '[1] f_str[3]:abc123,start:0,len:3,string:abc '
+- '[1] f_str[3]:abc123,start:3,len:3,string:123 '
 - '[1] f_str[2]:halo,start:0,len:4,string:halo '
 - '[1] f_str[2]:halo,start:0,len:4,string:halo '
 - '[1] f_str[2]:he&lo,start:0,len:5,string:he&lo '

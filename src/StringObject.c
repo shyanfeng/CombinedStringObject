@@ -1,17 +1,11 @@
-#include "StringObject.h"
-#include <string.h>
 #include <stdio.h>
-#include <malloc.h>
 #include <stdlib.h>
+#include "String.h"
+#include "CustomTypeAssert.h"
+#include "StringObject.h"
+#include "malloc.h"
+#include "CharSet.h"
 
-void textDump(Text *text){
-	if(text== NULL){
-		printf("(NULL)");
-		return;
-	}
-	printf("text[%d]:%s\n",
-			text->reference,text->string);
-}
 
 void stringDump(String *string){
 	int index = 0,len = 0;
@@ -42,34 +36,6 @@ void stringDump(String *string){
 	return;
 }
 
-Text *textNew(char *charStr){
-	Text *text = (Text *)malloc(strlen(charStr) + 4 + 1);
-	strcpy(text->string,charStr); // destination,source
-	text->reference = 1;
-	return text;
-}
-
-Text *textAssign(Text *text){
-	if(text->reference == 0x80000000){
-		return text;
-	}else{
-		text->reference ++;
-	}
-	return text;
-}
-
-Text *textDel(Text *text){
-	if(text->reference == 0x80000000){
-			return text;
-	}else{
-		text->reference --;
-			if(text->reference == 0x00){
-				free(text);
-				return NULL;
-			}
-	}
-	return text;
-}
 
 String *stringNew(Text *text){
 	String *string = malloc(sizeof(String));
@@ -107,20 +73,26 @@ void stringSkip(String *string,int numChar2skip){
 	}
 }
 
-void stringTrimLeft(String *string){
-	int i=0;
-	char ch=string->text->string[0];
-	
-	while(isSpace(ch)){
-		i++;
-		ch=string->text->string[i];
-		string->start++;
-		string->length--;
 
+
+void stringTrimLeft(String *string){
+	int i=string->start;
+
+	
+	while(string->text->string[i] != 0){
+		if(!isSpace(string->text->string[i])){
+			break;
+		}else{
+			string->start++;
+			string->length--;
+		}
+		i++;	
 	}
 	
 	
 }
+	
+
 
 void stringTrimRight(String *string){
 	int i=string->start+string->length-1;
@@ -183,40 +155,44 @@ String *stringRemoveWordNotContaining(String *string,char delimiters[]){
 	return stringA; 
 }
 
-
 String *stringRemoveWordContaining(String *string,char containSet[]){
-	int i=0,j=0,value=0;
-	char isChar=string->text->string[i];
+
+	int i=string->start;
+	int j=0,k=0;
+	int value=0;
+	int returnValue = 0;
 	String *stringA = stringNew(string->text);
 	stringA->length = 0;
 	stringA->start = string->start;
 	
-	while(string->text->string[i]!=0){
-	while(containSet[j] != 0){
-		if(string->text->string[i] == containSet[j]){
-			string->start++;
-			string->length--;
-			stringA->length++;
-			goto here;
-		}else{
-			value++;
+	for(k = 0; containSet[k] > string->length ; k++){
+		value++;
+	}
+	
+	while(string->text->string[i] != 0){
+		while(containSet[j] != 0){
+			if(string->text->string[i] == containSet[j]){
+				string->start ++;
+				string->length --;
+				stringA->length ++;
+				goto here;
+			}else{
+				returnValue++;
+			}
+			j++;
+		}if(returnValue>=value){
+			goto come;
 		}
-		j++;
-	}
-
-	if(value>=stringA->length){
-		goto come;
-	}
 		here:
 		j=0;
 		i++;
 	}
 	come:
-	return stringA; 		
+	return stringA;
+	
 }
 
-
-int stringlsEqual(String *string1,String *string2){
+int stringIsEqual(String *string1,String *string2){
 	int i = 0, count = 0;
 	int j = 0;
 	for(i = string1->start, j = string2->start ; i<string1->length || j<string2->length; i++,j++){
@@ -227,7 +203,7 @@ int stringlsEqual(String *string1,String *string2){
 	return 1;
 }
 
-int stringlsEqualCaseInsensitive(String *string1,String *string2){
+int stringIsEqualCaseInsensitive(String *string1,String *string2){
 	int i =0 ,j = 0;
 	
 	for(i = 0; string1->text->string[i];i++){
@@ -249,13 +225,11 @@ int stringlsEqualCaseInsensitive(String *string1,String *string2){
 
 int stringCharAt(String *string,int relativeIndex){
 
-	if(relativeIndex < 0 && string->start+relativeIndex>=string->length){
+	if(relativeIndex < 0 || relativeIndex>=string->length){
 		return -1;
 	}else{
 		return string->text->string[string->start+relativeIndex];
 	}
-	
-
 }
 
 int stringIsCharAtInSet(String *string,int relativeIndex,char set[]){
@@ -307,6 +281,11 @@ int stringToInteger(String *string){
 	
 	return integerChar;
 }
+
+
+
+
+
 
 
 

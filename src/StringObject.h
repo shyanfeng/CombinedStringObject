@@ -43,4 +43,7 @@ int stringIsCharAtInSet(String *string,int relativeIndex,char set[]);
 int stringToInteger(String *string);
 char *stringSubstringInChar(String *string, int start,int length);
 Text *stringSubstringInText(String *string,int start,int length);
+
+
+
 #endif //__STRING_OBJECT_H__

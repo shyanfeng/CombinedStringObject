@@ -1,7 +1,9 @@
 #include "unity.h"
-#include "StringObject.h"
 #include "CustomTypeAssert.h"
+#include "StringObject.h"
+#include "String.h"
 #include "Text.h"
+
 typedef struct FakeText{
 	uint32 reference;
 	char string[80];
@@ -22,80 +24,6 @@ void test_stringDump_explore(void){
 			.length = 100
 		};
 		stringDump(&str);
-}
-
-void test_textDump_explore(void){	
-		FakeText fakeText = {
-			.reference = 3,
-			.string = "dummy"
-		};
-	
-		textDump((Text *)&fakeText);
-}
-
-void test_textNew_copy_character_to_string_dynamic(void){
-		Text *name1;
-		name1 = textNew("Bye");
-		textDump(name1);
-		
-		TEST_ASSERT_EQUAL(0x01,name1->reference);
-}
-
-void test_textNew_copy_character_to_string_static(void){
-		Text *name1;
-		name1 = t"Haha";
-	
-		
-		TEST_ASSERT_EQUAL(0x80000000,name1->reference);
-}
-
-void test_textAssign_assign_character(void){
-		Text *name1 = t"HAHA";
-		Text *name2;
-		Text *name3;
-		name2 = textNew("Bye");
-		name3 = textAssign(name2);
-			
-		TEST_ASSERT_EQUAL(0x80000000,name1->reference);
-		TEST_ASSERT_EQUAL(0x02,name3->reference);
-		TEST_ASSERT_EQUAL(0x02,name2->reference);
-}
-
-void test_textAssign_assign_character_static(void){
-		Text *name1 = t"HeHA";
-		Text *name2;
-	    name2 = textAssign(name1);
-		TEST_ASSERT_EQUAL_HEX32(0x80000000,name2->reference);
-}
-
-
-void test_textDel_text_dynamic_delete_1(void){	
-		Text *name2;
-		Text *name3;
-		name2 = textNew("zzz");
-		name3 = textAssign(name2);
-		name3 = textDel(name3);
-
-		
-		TEST_ASSERT_EQUAL(0x01,name2->reference);			
-}
-
-void test_textDel_text_static(void){
-		Text *name = t"Come";
-		Text *name1 = textDel(name);
-		TEST_ASSERT_EQUAL(0x80000000,name1->reference);		
-}
-
-
-void test_textDel_text_dynamic_NULL(void){	
-		Text *name2;
-		Text *name3;
-		name2 = textNew("AAA");
-		name3 = textAssign(name2);
-		name3 = textDel(name3);
-		name2 = textDel(name2);
-		
-		TEST_ASSERT_NULL(name2);			
 }
 
 void test_stringNew_dynamic(void){
@@ -148,7 +76,9 @@ void test_stringDel_null(void){
 void test_stringSkip(void){
 		
 		String *string1 = stringNew(textNew("VVV"));
+		
 		stringSkip(string1,2);
+		stringDump(string1);
 		TEST_ASSERT_EQUAL(0x02,string1->start);
 		TEST_ASSERT_EQUAL(0x01,string1->length);
 
@@ -162,6 +92,8 @@ void test_stringTrimLeft(void){
 		TEST_ASSERT_EQUAL(0x03,string1->length);
 }
 
+
+
 void test_stringTrimRight(void){
 
 		String *string12 = stringNew(textNew("aaa           "));
@@ -169,6 +101,8 @@ void test_stringTrimRight(void){
 		TEST_ASSERT_EQUAL(0x00,string12->start);
 		TEST_ASSERT_EQUAL(0x03,string12->length);
 }
+
+
 
 void test_stringTrim(void){
 
@@ -244,20 +178,20 @@ void test_stringRemoveWordNotContaining_baskinrobbin(void){
 
 void test_stringRemoveWordContaining(void){
 
-		Text *new = textNew("abc56");
+		Text *new = textNew("abc123");
 		String *string1 = stringNew(new);
-		String *a = stringRemoveWordContaining(string1,"abc");
+		String *a = stringRemoveWordContaining(string1,"cba");
 		stringDump(a);
 		stringDump(string1);
 		
 		TEST_ASSERT_EQUAL(0,a->start);
 		TEST_ASSERT_EQUAL(3,a->length);
 		TEST_ASSERT_EQUAL(3,string1->start);
-		TEST_ASSERT_EQUAL(2,string1->length);
+		TEST_ASSERT_EQUAL(3,string1->length);
 	
 }
 
-void test_stringlsEqual(void){
+void test_stringIsEqual(void){
 		int input;
 		Text *name2;
 		Text *name3;
@@ -268,13 +202,13 @@ void test_stringlsEqual(void){
 		name3 = textNew("sung");
 		String *string2 = stringNew(name3);
 		
-		input = stringlsEqual(string1,string2);
+		input = stringIsEqual(string1,string2);
 		
 		TEST_ASSERT_EQUAL(1,input);
 	
 }
 
-void test_stringlsEqualCaseInsensitive(void){
+void test_stringIsEqualCaseInsensitive(void){
 		int input;
 		Text *name2;
 		Text *name3;
@@ -283,7 +217,7 @@ void test_stringlsEqualCaseInsensitive(void){
 		name3 = textNew("halO");
 		String *string2 = stringNew(name3);
 		
-		input = stringlsEqualCaseInsensitive(string1,string2);
+		input = stringIsEqualCaseInsensitive(string1,string2);
 		stringDump(string1);
 		stringDump(string2);
 		
@@ -336,6 +270,9 @@ void test_stringToInteger(void){
 
 		TEST_ASSERT_EQUAL(12,a);
 }
+
+
+
 
 
 

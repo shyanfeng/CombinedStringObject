@@ -1,12 +1,14 @@
 #include <stdio.h>
+#include <malloc.h>
+#include "CException.h"
 #include "Token.h"
 #include "CharSet.h"
-#include "StringObject.h"
-#include <malloc.h>
 #include "ErrorCode.h"
-#include "CException.h"
-#define MAIN_OPERATOR_TABLE_SIZE (sizeof(mainOperatorTable)/sizeof(OperatorInfo))
-#define ALTERNATIVE_OPERATOR_TABLE_SIZE (sizeof(alternativeOperatorTable)/sizeof(OperatorInfo))
+#include "CustomTypeAssert.h"
+
+
+#define MAIN_OPERATOR_TABLE_SIZE	(sizeof(mainOperatorTable)/sizeof(OperatorInfo))
+#define	ALTERNATIVE_OPERATOR_TABLE_SIZE	(sizeof(alternativeOperatorTable)/sizeof(OperatorInfo))
 
 OperatorInfo mainOperatorTable[] = {
   {.symbol="~", .id=BITWISE_NOT_OP, .precedence=150, .affix=INFIX, .assoc=LEFT_TO_RIGHT},
@@ -39,12 +41,10 @@ OperatorInfo alternativeOperatorTable[] = {
  */
 Number *numberNew(int value){
 	Number *numbers = malloc(sizeof(Number));
-	
-	
+
 	numbers->value = value;
 	numbers->type = NUMBER_TOKEN;
-	
-	
+		
 	return numbers;
 }
 
@@ -102,14 +102,67 @@ Operator *operatorNewByID(OperatorID id) {
  *   name is the name of the identifier.
  */
 Identifier *identifierNew(Text *name) {
-  Identifier *identifier = malloc(sizeof(name));
+  Identifier *identifier = malloc(sizeof(Identifier));
   
   identifier->type = IDENTIFIER_TOKEN;
-  identifier->number->value = 0;
+  identifier->number = NULL;
   identifier->name = name;
   
   return identifier;
 }
+
+
+Token *getNumber(String *str){
+		String *strStore;
+		strStore = stringRemoveWordContaining(str,numberSet);
+		if(isSpace(stringCharAt(str,0)) || str->length==0){
+			return (Token *) numberNew(stringToInteger(strStore));
+		}else{
+				free(strStore);
+				Throw(ERR_NUMBER_NOT_WELL_FORMED);
+		}
+	return (Token *) numberNew(stringToInteger(strStore));
+}
+
+Token *getIdentifier(String *str){
+		String *strStore;
+		strStore = stringRemoveWordContaining(str,alphabetSet);
+		if(isSpace(stringCharAt(str,0)) || str->length==0){
+			return (Token *)identifierNew(stringSubstringInText(strStore,strStore->start,strStore->length));
+		}else{
+				free(strStore);
+				Throw(ERR_NUMBER_NOT_WELL_FORMED);
+		}
+	return (Token *)identifierNew(stringSubstringInText(strStore,strStore->start,strStore->length));
+}
+
+Token *getOperator(String *str){
+		char operators[3];
+		operators[0] = (char)stringRemoveChar(str);
+		operators[1] = 0;
+		stringDump(str);
+			if(operators[0] == stringCharAt(str,0)){
+				if(stringCharAt(str,0) == '&'){
+					operators[1] = (char)stringRemoveChar(str);
+					operators[2] = 0;
+					goto here;
+				}else if(stringCharAt(str,0) == '|'){
+					operators[1] = (char)stringRemoveChar(str);
+					operators[2] = 0;
+					goto here;
+				}else{
+					Throw(ERR_NUMBER_NOT_WELL_FORMED);
+				}
+			}
+			if(isSpace(stringCharAt(str,0)) || str->length==0){
+				return (Token*)operatorNewBySymbol(operators);
+			}else{
+					Throw(ERR_NUMBER_NOT_WELL_FORMED);
+			}
+		here:
+		return (Token*)operatorNewBySymbol(operators);
+}
+
 
 /**
  * Return the one token from the String. The String is updated.
@@ -121,65 +174,42 @@ Identifier *identifierNew(Text *name) {
  * Possible returned token:
  *    Number, Operator, and Identifier tokens
  */
+ 
 Token *getToken(String *str) {
+	
+	Token *returnToken;
 	stringTrimLeft(str);
-	/*
-	*	Test if the char is a number!
-	*/
-	if(stringIsCharAtInSet(str,str->start,numberSet)){
-		int value;
 	
-		return (Token *)numberNew(stringToInteger(str));
-	}
-	
-	/*
-	*	Test if the char is a operator
-	*/
-	
-	else if(stringIsCharAtInSet(str,str->start,operatorSet)){
-		char operators[3];
-		operators[0] = (char)stringRemoveChar(str);
-		operators[1] = 0;
+	if(stringIsCharAtInSet(str,0,numberSet)){
+		 getNumber(str);
 		
-			if(operators[0] == stringCharAt(str,0)){
-				if(stringCharAt(str,0) == '&'){
-					operators[1] = (char)stringRemoveChar(str);
-					operators[2] = 0;
-					return (Token*)operatorNewBySymbol(operators);
-				}else if(stringCharAt(str,0) == '|'){
-			
-					operators[1] = (char)stringRemoveChar(str);
-					operators[2] = 0;
-					return (Token*)operatorNewBySymbol(operators);
-				}else{
-					Throw(ERR_NUMBER_NOT_WELL_FORMED);
-			
-			}
-			}
-	
-		return (Token*)operatorNewBySymbol(operators);
+	}
+
+	else if(stringIsCharAtInSet(str,0,alphabetSet)){
+		 getIdentifier(str);
 	}
 	
-	/*
-	*	Test if the char is a alphabet!
-	*/
-	
-	else if(stringIsCharAtInSet(str,str->start,alphabetSet)){
-		String *string;
-		if((stringIsCharAtInSet(str,str->start,alphabetSet)) == (stringIsCharAtInSet(str,str->start,numberSet))){
-			Throw(ERR_NUMBER_NOT_WELL_FORMED);
-		}else{
-			string = stringRemoveWordContaining(str,alphabetSet);
-		}
-	
-		return (Token *)identifierNew(stringSubstringInText(string,0,string->length));
+	else if(stringIsCharAtInSet(str,0,operatorSet)){
+		 getOperator(str);
 	}
+		
+	else{
+		Throw(ERR_NUMBER_NOT_WELL_FORMED);
+	}
+}
+
+
+
+
+	
 	
 	
 
 	
 	
-}
+	
+
+	
 
 
 
