@@ -83,7 +83,7 @@ void test_getToken_if_is_abc(void){
 	Token *token ;
 
 	token = getToken(str);
-	printf("%s",((Identifier *)token)->name->string);
+
 	TEST_ASSERT_EQUAL(IDENTIFIER_TOKEN,(Identifier *)token->type);
 	TEST_ASSERT_EQUAL_STRING("abc",((Identifier *)token)->name->string);
 }
@@ -95,7 +95,7 @@ void test_getToken_identifier_is_space(void){
 	Token *token ;
 
 	token = getToken(str);
-	printf("%s",((Identifier *)token)->name->string);
+
 	TEST_ASSERT_EQUAL(IDENTIFIER_TOKEN,(Identifier *)token->type);
 	TEST_ASSERT_EQUAL_STRING("abc",((Identifier *)token)->name->string);
 }
@@ -106,7 +106,7 @@ void test_getToken_if_is_operator(void){
 	Text *text = textNew("&");
 	String *str = stringNew(text);
 	Token *token = getToken(str);
-	printf("%s",((Operator *)token)->info->symbol);
+
 	
 	TEST_ASSERT_EQUAL(OPERATOR_TOKEN,(Operator*)token->type);
 	TEST_ASSERT_EQUAL_STRING("&",((Operator *)token)->info->symbol);
@@ -119,7 +119,7 @@ void test_getToken_if_is_operator2(void){
 	Text *text = textNew("||");
 	String *str = stringNew(text);
 	Token *token = getToken(str);
-	printf("%s",((Operator *)token)->info->symbol);
+
 	
 	TEST_ASSERT_EQUAL(OPERATOR_TOKEN,(Operator*)token->type);
 	TEST_ASSERT_EQUAL_STRING("||",((Operator *)token)->info->symbol);
@@ -190,8 +190,32 @@ void test_getToken_symbol_and_number_and_identifier_not_error(void){
 	TEST_ASSERT_EQUAL_String("",string);
 }
 
+void test_getToken_symbol_and_number__not_error(void){
+	Text *text = textNew("      321 123");
+	String *string = stringNew(text);
+	Token *token;
+	
+	
 
+	token = getToken(string);
+	TEST_ASSERT_EQUAL(321,((Number*)token)->value);
+	TEST_ASSERT_EQUAL(NUMBER_TOKEN,token->type);
+	TEST_ASSERT_EQUAL_String(" 123",string);
+	
+	token = getToken(string);
+	 TEST_ASSERT_EQUAL(123,((Number*)token)->value);
+	TEST_ASSERT_EQUAL(NUMBER_TOKEN,token->type);
+	TEST_ASSERT_EQUAL_String("",string);
+}
 
+void test_tokenDel(void){
+	
+	Text *text = textNew("abc");
+	String *string = stringNew(text);
+	Token *token = getToken(string);
+	tokenDel(token);
+
+}
 
 
 

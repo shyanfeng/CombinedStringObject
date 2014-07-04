@@ -80,5 +80,5 @@ Token *getToken(String *str);
 Token *getOperator(String *str);
 Token *getIdentifier(String *str);
 Token *getNumber(String *str);
-
+void tokenDel(Token *token);
 #endif // Token_H

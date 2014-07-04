@@ -140,7 +140,7 @@ Token *getOperator(String *str){
 		char operators[3];
 		operators[0] = (char)stringRemoveChar(str);
 		operators[1] = 0;
-		stringDump(str);
+	
 			if(operators[0] == stringCharAt(str,0)){
 				if(stringCharAt(str,0) == '&'){
 					operators[1] = (char)stringRemoveChar(str);
@@ -198,10 +198,35 @@ Token *getToken(String *str) {
 	}
 }
 
-
-
-
+void tokenDel(Token *token){
 	
+	if(token->type == IDENTIFIER_TOKEN){
+		textDel(((Identifier*)token)->name);
+		free(((Identifier*)token)->number);
+	}else if(token->type == NUMBER_TOKEN){
+		((Number*)token)->value = 0;
+		free(token);
+	}else if(token->type == OPERATOR_TOKEN){
+		free(((Operator*)token)->info->symbol);
+	}
+	
+}
+
+
+
+
+
+
+
+
+
+
+	// if(token->type == IDENTIFIER_TOKEN){
+		// 
+		// free(((Identifier*)token)->type);
+	// }
+
+
 	
 	
 

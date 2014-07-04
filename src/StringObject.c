@@ -192,6 +192,7 @@ String *stringRemoveWordContaining(String *string,char containSet[]){
 	
 }
 
+
 int stringIsEqual(String *string1,String *string2){
 	int i = 0, count = 0;
 	int j = 0;
@@ -285,7 +286,7 @@ int stringToInteger(String *string){
 
 
 
-
+	
 
 
 
