@@ -5,4 +5,5 @@
 
 int extractValue(String *arguments);
 int extractDestination(String *arguments);
+int extractACCESSBANKED(String *arguments);
 #endif //_EVALUATE_H_
