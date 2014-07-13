@@ -101,7 +101,7 @@ void test_operand3ExtractACCESSBANKED_is_not_empty_argument(void){
 	value = operand3ExtractACCESSBANKED(string,0x20);
 
 
-	TEST_ASSERT_EQUAL(value,0x1);
+	TEST_ASSERT_EQUAL(value,0x0);
 }
 
 void test_operand3ExtractACCESSBANKED_is_not_empty_argument1(void){
@@ -114,45 +114,212 @@ void test_operand3ExtractACCESSBANKED_is_not_empty_argument1(void){
 	value = operand3ExtractACCESSBANKED(string,0x81);
 
 
-	TEST_ASSERT_EQUAL(value,0x0);
+	TEST_ASSERT_EQUAL(value,0x1);
 }
 
-void test_FDA1(void){
+
+//TEST operand1 is not NULL 2,3 NULL
+
+
+void test_FDA_operand1_is_34_operand2_and_operand3_is_NULL(void){
 	int value,error;
 	Text *new = textNew("");
 	String *string = stringNew(new);
-	extractValue_ExpectAndReturn(string,0x23);
+	
+	extractValue_ExpectAndReturn(string,0x34);
 	extractDestination_ExpectAndThrow(string,6);
 	extractACCESSBANKED_ExpectAndThrow(string,6);
-
-
+	
 	value = FDA(string);
 		
-	TEST_ASSERT_EQUAL(value,0x25);
+	TEST_ASSERT_EQUAL(value,0x35);
 }
 
-void test_FDA2(void){
+void test_FDA_operand1_is_85_operand2_and_operand3_is_NULL(void){
 	int value,error;
 	Text *new = textNew("");
 	String *string = stringNew(new);
-	extractValue_ExpectAndReturn(string,0x123);
+	
+	extractValue_ExpectAndReturn(string,0x85);
 	extractDestination_ExpectAndThrow(string,6);
 	extractACCESSBANKED_ExpectAndThrow(string,6);
+	
 	value = FDA(string);
 		
-	TEST_ASSERT_EQUAL(value,0x24);
+	TEST_ASSERT_EQUAL(value,0x87);
 }
 
-void test_FDA3(void){
+void test_FDA_operand1_is_ff_operand2_and_operand3_is_NULL(void){
 	int value,error;
 	Text *new = textNew("");
 	String *string = stringNew(new);
-	extractValue_ExpectAndReturn(string,0x123);
+	
+	extractValue_ExpectAndReturn(string,0xff);
+	extractDestination_ExpectAndThrow(string,6);
+	extractACCESSBANKED_ExpectAndThrow(string,6);
+	
+	value = FDA(string);
+		
+	TEST_ASSERT_EQUAL(value,0x101);
+}
+
+void test_FDA_operand1_is_ffe_operand2_and_operand3_is_NULL(void){
+	int value,error;
+	Text *new = textNew("");
+	String *string = stringNew(new);
+	
+	extractValue_ExpectAndReturn(string,0xffe);
+	extractDestination_ExpectAndThrow(string,6);
+	extractACCESSBANKED_ExpectAndThrow(string,6);
+	
+	value = FDA(string);
+		
+	TEST_ASSERT_EQUAL(value,0xff);
+}
+
+
+//TEST operand1,2 is not NULL 3 NULL
+
+void test_FDA_operand1_is_34_operand2_is_0_and_operand3_is_NULL(void){
+	int value,error;
+	Text *new = textNew("");
+	String *string = stringNew(new);
+	
+	extractValue_ExpectAndReturn(string,0x34);
 	extractDestination_ExpectAndReturn(string,0);
-	extractACCESSBANKED_ExpectAndReturn(string,0);
+	extractACCESSBANKED_ExpectAndThrow(string,6);
+	
 	value = FDA(string);
 		
-	TEST_ASSERT_EQUAL_HEX8(value,0x23);
+	TEST_ASSERT_EQUAL(value,0x34);
 }
 
+void test_FDA_operand1_is_34_operand2_is_1_and_operand3_is_NULL(void){
+	int value,error;
+	Text *new = textNew("");
+	String *string = stringNew(new);
+	
+	extractValue_ExpectAndReturn(string,0x34);
+	extractDestination_ExpectAndReturn(string,1);
+	extractACCESSBANKED_ExpectAndThrow(string,6);
+	
+	value = FDA(string);
+		
+	TEST_ASSERT_EQUAL(value,0x35);
+}
+
+void test_FDA_operand1_is_85_operand2_is_0_and_operand3_is_NULL(void){
+	int value,error;
+	Text *new = textNew("");
+	String *string = stringNew(new);
+	
+	extractValue_ExpectAndReturn(string,0x85);
+	extractDestination_ExpectAndReturn(string,0);
+	extractACCESSBANKED_ExpectAndThrow(string,6);
+	
+	value = FDA(string);
+		
+	TEST_ASSERT_EQUAL(value,0x86);
+}
+
+void test_FDA_operand1_is_85_operand2_is_1_and_operand3_is_NULL(void){
+	int value,error;
+	Text *new = textNew("");
+	String *string = stringNew(new);
+	
+	extractValue_ExpectAndReturn(string,0x85);
+	extractDestination_ExpectAndReturn(string,1);
+	extractACCESSBANKED_ExpectAndThrow(string,6);
+	
+	value = FDA(string);
+		
+	TEST_ASSERT_EQUAL(value,0x87);
+}
+
+void test_FDA_operand1_is_f01_operand2_is_0_and_operand3_is_NULL(void){
+	int value,error;
+	Text *new = textNew("");
+	String *string = stringNew(new);
+	
+	extractValue_ExpectAndReturn(string,0xf01);
+	extractDestination_ExpectAndReturn(string,0);
+	extractACCESSBANKED_ExpectAndThrow(string,6);
+	
+	value = FDA(string);
+		
+	TEST_ASSERT_EQUAL(value,0x2);
+}
+
+void test_FDA_operand1_is_f01_operand2_is_1_and_operand3_is_NULL(void){
+	int value,error;
+	Text *new = textNew("");
+	String *string = stringNew(new);
+	
+	extractValue_ExpectAndReturn(string,0xf01);
+	extractDestination_ExpectAndReturn(string,1);
+	extractACCESSBANKED_ExpectAndThrow(string,6);
+	
+	value = FDA(string);
+		
+	TEST_ASSERT_EQUAL(value,0x3);
+}
+
+void test_FDA_operand1_is_ffe_operand2_is_0_and_operand3_is_NULL(void){
+	int value,error;
+	Text *new = textNew("");
+	String *string = stringNew(new);
+	
+	extractValue_ExpectAndReturn(string,0xffe);
+	extractDestination_ExpectAndReturn(string,0);
+	extractACCESSBANKED_ExpectAndThrow(string,6);
+	
+	value = FDA(string);
+		
+	TEST_ASSERT_EQUAL(value,0xfe);
+}
+
+void test_FDA_operand1_is_ffe_operand2_is_1_and_operand3_is_NULL(void){
+	int value,error;
+	Text *new = textNew("");
+	String *string = stringNew(new);
+	
+	extractValue_ExpectAndReturn(string,0xffe);
+	extractDestination_ExpectAndReturn(string,1);
+	extractACCESSBANKED_ExpectAndThrow(string,6);
+	
+	value = FDA(string);
+		
+	TEST_ASSERT_EQUAL(value,0xff);
+}
+
+
+//operand1and3 is not NULL and operand2 is NULL
+
+void test_FDA_operand1_is_34_operand2_is_NULL_and_operand3_is_11(void){
+	int value,error;
+	Text *new = textNew("");
+	String *string = stringNew(new);
+	
+	extractValue_ExpectAndReturn(string,0x34);
+	extractDestination_ExpectAndThrow(string,6);
+	extractACCESSBANKED_ExpectAndReturn(string,11);
+	
+	value = FDA(string);
+		
+	TEST_ASSERT_EQUAL(value,0x36);
+}
+
+void test_FDA_operand1_is_f01_operand2_is_NULL_and_operand3_is_10(void){
+	int value,error;
+	Text *new = textNew("");
+	String *string = stringNew(new);
+	
+	extractValue_ExpectAndReturn(string,0xf01);
+	extractDestination_ExpectAndThrow(string,6);
+	extractACCESSBANKED_ExpectAndReturn(string,10);
+	
+	value = FDA(string);
+		
+	TEST_ASSERT_EQUAL(value,0x2);
+}
 

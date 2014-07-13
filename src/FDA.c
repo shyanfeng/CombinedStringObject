@@ -47,15 +47,16 @@ int operand2ExtractDestination(String *arguments){
 int operand3ExtractACCESSBANKED(String *arguments,int fileReg){
 	ErrorCode error;
 	int operand3;
-	
+	//0 access W
+	//1 bank F
 	Try{
 		operand3 = extractACCESSBANKED(arguments);
 	}Catch(error){
 		if(error == ERR_NO_ARGUMENT){
 			if((fileReg >= 0x00 && fileReg <= 0x80)||(fileReg >= 0xff0 && fileReg <= 0xfff)){
-				operand3 = 1;
+				operand3 = 0;
 			}else{
-				operand3 =  0;
+				operand3 = 1;
 			}
 		}else if(error != ERR_EMPTY_ARGUMENT){
 			if(error == ERR_INVALID_ARGUMENT){
@@ -76,7 +77,8 @@ int FDA(String *arguments){
 	operand1 = operand1ExtractValue(arguments);
 	operand2 = operand2ExtractDestination(arguments);
 	operand3 = operand3ExtractACCESSBANKED(arguments,operand1);
-	
+	printf("%x \n",operand2);
+	printf("%x \n",operand3);
 	
 	operand1 = operand1&0xff;
 	
@@ -87,7 +89,7 @@ int FDA(String *arguments){
 		operand2 = 0;
 	}
 	
-	if(operand3 == 1){
+	if(operand3%2 != 0){
 		operand3 = 1;
 	}else{
 		operand3 = 0;
