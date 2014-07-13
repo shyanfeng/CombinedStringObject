@@ -1,5 +1,5 @@
 #include "unity.h"
-#include "FDA.h"
+#include "FBA.h"
 #include "CException.h"
 #include "mock_Evaluate.h"
 #include "CustomTypeAssert.h"
@@ -41,37 +41,35 @@ void test_operand1ExtractValue_it_is_value(void){
 	TEST_ASSERT_EQUAL(value,0x123);
 }
 
-void test_operand2ExtractDestination_is_empty_argument(void){
+void test_operand2ExtractValue1(void){
 	int value,error;
 	Text *new = textNew("");
 	String *string = stringNew(new);
 	
-
-
-	extractDestination_ExpectAndThrow(string,4);
+	extractValue_ExpectAndThrow(string,4);
 	Try{
-		operand2ExtractDestination(string);
+		operand2ExtractValue(string);
 	}Catch(error){
 		TEST_ASSERT_EQUAL(error,ERR_INVALID_ARGUMENT);
 		return;
 	}
 	TEST_FAIL_MESSAGE("No exception thrown.");
-	
 }
 
-void test_operand2ExtractDestination_is_not_empty_argument(void){
+void test_operand2ExtractValue2(void){
 	int value,error;
 	Text *new = textNew("");
 	String *string = stringNew(new);
-	
-
-	extractDestination_ExpectAndThrow(string,6);
-	value = operand2ExtractDestination(string);
-
-
-	TEST_ASSERT_EQUAL(value,0x1);
-	
+	extractValue_ExpectAndThrow(string,6);
+	operand2ExtractValue(string);
+	extractValue_ExpectAndReturn(string,0x02);
+	value = operand2ExtractValue(string);
+			
+			
+	TEST_ASSERT_EQUAL(value,0x2);
 }
+
+
 
 void test_operand3ExtractACCESSBANKED_is_empty_argument(void){
 	int value,error;
@@ -117,42 +115,17 @@ void test_operand3ExtractACCESSBANKED_is_not_empty_argument1(void){
 	TEST_ASSERT_EQUAL(value,0x0);
 }
 
-void test_FDA1(void){
+int test_FBA1(void){
 	int value,error;
 	Text *new = textNew("");
 	String *string = stringNew(new);
-	extractValue_ExpectAndReturn(string,0x23);
-	extractDestination_ExpectAndThrow(string,6);
-	extractACCESSBANKED_ExpectAndThrow(string,6);
-
-
-	value = FDA(string);
+	
+	extractValue_ExpectAndReturn(string,0x123);
+	extractValue_ExpectAndThrow(string,6);
+	extractValue_ExpectAndReturn(string,0x123);
+	extractACCESSBANKED_ExpectAndReturn(string,1);
+	value = FBA(string);
 		
 	TEST_ASSERT_EQUAL(value,0x25);
+
 }
-
-void test_FDA2(void){
-	int value,error;
-	Text *new = textNew("");
-	String *string = stringNew(new);
-	extractValue_ExpectAndReturn(string,0x123);
-	extractDestination_ExpectAndThrow(string,6);
-	extractACCESSBANKED_ExpectAndThrow(string,6);
-	value = FDA(string);
-		
-	TEST_ASSERT_EQUAL(value,0x24);
-}
-
-void test_FDA3(void){
-	int value,error;
-	Text *new = textNew("");
-	String *string = stringNew(new);
-	extractValue_ExpectAndReturn(string,0x123);
-	extractDestination_ExpectAndReturn(string,0);
-	extractACCESSBANKED_ExpectAndReturn(string,0);
-	value = FDA(string);
-		
-	TEST_ASSERT_EQUAL_HEX8(value,0x23);
-}
-
-

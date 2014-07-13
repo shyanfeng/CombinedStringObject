@@ -1,10 +1,10 @@
-#ifndef _FDA_H_
-#define _FDA_H_
+#ifndef _FBA_H_
+#define _FBA_H_
 
 #include "Evaluate.h"
 
-int FDA(String *arguments);
+int FBA(String *arguments);
 int operand1ExtractValue(String *arguments);
-int operand2ExtractDestination(String *arguments);
+int operand2ExtractValue(String *arguments);
 int operand3ExtractACCESSBANKED(String *arguments,int fileReg);
-#endif //_FDA_H_
+#endif //_FBA_H_
