@@ -31,17 +31,17 @@ int operand2ExtractValue(String *arguments){
 	
 	Try{
 		operand2 = extractValue(arguments);
-			printf("%x \n",operand2);
 	}Catch(error){
 		if(error == ERR_NO_ARGUMENT){
-				operand2 = operand2&7;
-				printf("%x \n",operand2);
+				Throw(error);
 		}else if(error != ERR_EMPTY_ARGUMENT){
 			if(error == ERR_INVALID_ARGUMENT){
-					Throw(error);
+				Throw(error);
 			}
 		}
 	}
+	
+	
 	
 	return operand2;
 }
@@ -49,15 +49,16 @@ int operand2ExtractValue(String *arguments){
 int operand3ExtractACCESSBANKED(String *arguments,int fileReg){
 	ErrorCode error;
 	int operand3;
-	
+	//0 access W
+	//1 bank F
 	Try{
 		operand3 = extractACCESSBANKED(arguments);
 	}Catch(error){
 		if(error == ERR_NO_ARGUMENT){
 			if((fileReg >= 0x00 && fileReg <= 0x80)||(fileReg >= 0xff0 && fileReg <= 0xfff)){
-				operand3 = 1;
+				operand3 = 0;
 			}else{
-				operand3 =  0;
+				operand3 = 1;
 			}
 		}else if(error != ERR_EMPTY_ARGUMENT){
 			if(error == ERR_INVALID_ARGUMENT){
@@ -78,13 +79,17 @@ int FBA(String *arguments){
 	operand1 = operand1ExtractValue(arguments);
 	operand2 = operand2ExtractValue(arguments);
 	operand3 = operand3ExtractACCESSBANKED(arguments,operand1);
-	
-	
-	operand1 = operand1&0xff;
-	
-	
 
-	
+
+	operand1 = operand1&0xff;
+
+	operand2 = operand2&7;
+
+	if(operand3%2 != 0){
+		operand3 = 1;
+	}else{
+		operand3 = 0;
+	}
 	
 	return opcode = operand1 + operand2 + operand3;
 }

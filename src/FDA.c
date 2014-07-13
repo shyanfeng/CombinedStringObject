@@ -77,8 +77,7 @@ int FDA(String *arguments){
 	operand1 = operand1ExtractValue(arguments);
 	operand2 = operand2ExtractDestination(arguments);
 	operand3 = operand3ExtractACCESSBANKED(arguments,operand1);
-	printf("%x \n",operand2);
-	printf("%x \n",operand3);
+
 	
 	operand1 = operand1&0xff;
 	

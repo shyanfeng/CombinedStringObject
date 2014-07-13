@@ -61,12 +61,14 @@ void test_operand2ExtractValue2(void){
 	Text *new = textNew("");
 	String *string = stringNew(new);
 	extractValue_ExpectAndThrow(string,6);
-	operand2ExtractValue(string);
-	extractValue_ExpectAndReturn(string,0x02);
-	value = operand2ExtractValue(string);
-			
-			
-	TEST_ASSERT_EQUAL(value,0x2);
+	
+	Try{
+		operand2ExtractValue(string);
+	}Catch(error){
+		TEST_ASSERT_EQUAL(error,ERR_NO_ARGUMENT);
+		return;
+	}
+	TEST_FAIL_MESSAGE("No exception thrown.");
 }
 
 
@@ -99,7 +101,7 @@ void test_operand3ExtractACCESSBANKED_is_not_empty_argument(void){
 	value = operand3ExtractACCESSBANKED(string,0x20);
 
 
-	TEST_ASSERT_EQUAL(value,0x1);
+	TEST_ASSERT_EQUAL(value,0x0);
 }
 
 void test_operand3ExtractACCESSBANKED_is_not_empty_argument1(void){
@@ -112,20 +114,48 @@ void test_operand3ExtractACCESSBANKED_is_not_empty_argument1(void){
 	value = operand3ExtractACCESSBANKED(string,0x81);
 
 
-	TEST_ASSERT_EQUAL(value,0x0);
+	TEST_ASSERT_EQUAL(value,0x1);
 }
 
-int test_FBA1(void){
+void test_FBA_operand1_is_34_and_operand2_is_0_and_operand3_is_NULL(void){
 	int value,error;
 	Text *new = textNew("");
 	String *string = stringNew(new);
+
+	extractValue_ExpectAndReturn(string,0x34);
+	extractValue_ExpectAndReturn(string,2);
+	extractACCESSBANKED_ExpectAndThrow(string,6);
+	value = FBA(string);
 	
-	extractValue_ExpectAndReturn(string,0x123);
-	extractValue_ExpectAndThrow(string,6);
-	extractValue_ExpectAndReturn(string,0x123);
+	TEST_ASSERT_EQUAL(value,0x36);
+}
+
+void test_FBA_operand1_is_34_and_operand2_is_10_and_operand3_is_NULL(void){
+	int value,error;
+	Text *new = textNew("");
+	String *string = stringNew(new);
+
+	extractValue_ExpectAndReturn(string,0x34);
+	extractValue_ExpectAndReturn(string,0x11);
+	extractACCESSBANKED_ExpectAndThrow(string,6);
+	value = FBA(string);
+	
+	TEST_ASSERT_EQUAL(value,0x35);
+}
+
+void test_FBA_operand1_is_34_and_operand2_is_10_and_operand3_is_1(void){
+	int value,error;
+	Text *new = textNew("");
+	String *string = stringNew(new);
+
+	extractValue_ExpectAndReturn(string,0x34);
+	extractValue_ExpectAndReturn(string,0x11);
 	extractACCESSBANKED_ExpectAndReturn(string,1);
 	value = FBA(string);
-		
-	TEST_ASSERT_EQUAL(value,0x25);
-
+	
+	TEST_ASSERT_EQUAL(value,0x36);
 }
+
+
+
+
