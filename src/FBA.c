@@ -1,74 +1,16 @@
 #include <stdio.h>
 #include "FBA.h"
-#include "Evaluate.h"
+#include "Extract.h"
 #include "StringObject.h"
 #include "String.h"
 #include "CustomTypeAssert.h"
 #include "CException.h"
 #include "ErrorCode.h"
+#include "ExtractValue.h"
+#include "Extract3BitsValue.h"
+#include "Extract1BitsAccessBanked.h"
 
 
-
-
-int operand1ExtractValue(String *arguments){
-	ErrorCode error;
-	int operand1;
-	
-	Try{
-		operand1 = extractValue(arguments);
-	}Catch(error){
-			Throw(error);
-	}
-	
-	return operand1;
-}
-
-
-
-int operand2ExtractValue(String *arguments){
-	ErrorCode error;
-	int operand2;
-	
-	Try{
-		operand2 = extractValue(arguments);
-	}Catch(error){
-		if(error == ERR_NO_ARGUMENT){
-				Throw(error);
-		}else if(error != ERR_EMPTY_ARGUMENT){
-			if(error == ERR_INVALID_ARGUMENT){
-				Throw(error);
-			}
-		}
-	}
-	
-	
-	
-	return operand2;
-}
-
-int operand3ExtractACCESSBANKED(String *arguments,int fileReg){
-	ErrorCode error;
-	int operand3;
-	//0 access W
-	//1 bank F
-	Try{
-		operand3 = extractACCESSBANKED(arguments);
-	}Catch(error){
-		if(error == ERR_NO_ARGUMENT){
-			if((fileReg >= 0x00 && fileReg <= 0x80)||(fileReg >= 0xff0 && fileReg <= 0xfff)){
-				operand3 = 0;
-			}else{
-				operand3 = 1;
-			}
-		}else if(error != ERR_EMPTY_ARGUMENT){
-			if(error == ERR_INVALID_ARGUMENT){
-				Throw(error);
-			}
-		}
-	}
-	
-	return operand3;
-}
 
 
 int FBA(String *arguments){
@@ -77,8 +19,8 @@ int FBA(String *arguments){
 	ErrorCode error;
 		
 	operand1 = operand1ExtractValue(arguments);
-	operand2 = operand2ExtractValue(arguments);
-	operand3 = operand3ExtractACCESSBANKED(arguments,operand1);
+	operand2 = extract3BitsValue(arguments);
+	operand3 = extract1bitsACCESSBANKED(arguments,operand1);
 
 
 	operand1 = operand1&0xff;
@@ -90,6 +32,6 @@ int FBA(String *arguments){
 	}else{
 		operand3 = 0;
 	}
-	
-	return opcode = operand1 + operand2 + operand3;
+	opcode = operand1 + (operand3<<8) + (operand2<<9) ;
+	return opcode;
 }

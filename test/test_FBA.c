@@ -1,121 +1,20 @@
 #include "unity.h"
 #include "FBA.h"
 #include "CException.h"
-#include "mock_Evaluate.h"
+#include "mock_Extract.h"
 #include "CustomTypeAssert.h"
 #include "StringObject.h"
 #include "String.h"
 #include "Text.h"
 #include "ErrorCode.h"
-
+#include "ExtractValue.h"
+#include "Extract3BitsValue.h"
+#include "Extract1BitsAccessBanked.h"
 
 void setUp(void){}
 void tearDown(void){}
 
-void test_operand1ExtractValue(void){
-	int value,error;
-	Text *new = textNew("");
-	String *string = stringNew(new);
-	
-	extractValue_ExpectAndThrow(string,3);
-	
-	Try{
-		operand1ExtractValue(string);
-	}Catch(error){
-		TEST_ASSERT_EQUAL(error,ERR_EMPTY_VALUE);
-		return;
-	}
-	TEST_FAIL_MESSAGE("No exception thrown.");
-}
 
-
-void test_operand1ExtractValue_it_is_value(void){
-	int value,error;
-	Text *new = textNew("");
-	String *string = stringNew(new);
-	
-	extractValue_ExpectAndReturn(string,0x123);
-	value = operand1ExtractValue(string);
-			
-			
-	TEST_ASSERT_EQUAL(value,0x123);
-}
-
-void test_operand2ExtractValue1(void){
-	int value,error;
-	Text *new = textNew("");
-	String *string = stringNew(new);
-	
-	extractValue_ExpectAndThrow(string,4);
-	Try{
-		operand2ExtractValue(string);
-	}Catch(error){
-		TEST_ASSERT_EQUAL(error,ERR_INVALID_ARGUMENT);
-		return;
-	}
-	TEST_FAIL_MESSAGE("No exception thrown.");
-}
-
-void test_operand2ExtractValue2(void){
-	int value,error;
-	Text *new = textNew("");
-	String *string = stringNew(new);
-	extractValue_ExpectAndThrow(string,6);
-	
-	Try{
-		operand2ExtractValue(string);
-	}Catch(error){
-		TEST_ASSERT_EQUAL(error,ERR_NO_ARGUMENT);
-		return;
-	}
-	TEST_FAIL_MESSAGE("No exception thrown.");
-}
-
-
-
-void test_operand3ExtractACCESSBANKED_is_empty_argument(void){
-	int value,error;
-
-	Text *new = textNew("");
-	String *string = stringNew(new);
-	
-
-	extractACCESSBANKED_ExpectAndThrow(string,4);
-	Try{
-		operand3ExtractACCESSBANKED(string,0);
-	}Catch(error){
-		TEST_ASSERT_EQUAL(error,ERR_INVALID_ARGUMENT);
-		return;
-	}
-	TEST_FAIL_MESSAGE("No exception thrown.");
-}
-
-
-void test_operand3ExtractACCESSBANKED_is_not_empty_argument(void){
-	int value,error;
-	Text *new = textNew("");
-	String *string = stringNew(new);
-	
-
-	extractACCESSBANKED_ExpectAndThrow(string,6);
-	value = operand3ExtractACCESSBANKED(string,0x20);
-
-
-	TEST_ASSERT_EQUAL(value,0x0);
-}
-
-void test_operand3ExtractACCESSBANKED_is_not_empty_argument1(void){
-	int value,error;
-	Text *new = textNew("");
-	String *string = stringNew(new);
-	
-
-	extractACCESSBANKED_ExpectAndThrow(string,6);
-	value = operand3ExtractACCESSBANKED(string,0x81);
-
-
-	TEST_ASSERT_EQUAL(value,0x1);
-}
 
 void test_FBA_operand1_is_34_and_operand2_is_0_and_operand3_is_NULL(void){
 	int value,error;
@@ -124,10 +23,10 @@ void test_FBA_operand1_is_34_and_operand2_is_0_and_operand3_is_NULL(void){
 
 	extractValue_ExpectAndReturn(string,0x34);
 	extractValue_ExpectAndReturn(string,2);
-	extractACCESSBANKED_ExpectAndThrow(string,6);
+	extractACCESSBANKED_ExpectAndThrow(string,4);
 	value = FBA(string);
 	
-	TEST_ASSERT_EQUAL(value,0x36);
+	TEST_ASSERT_EQUAL_HEX32(value,0x434);
 }
 
 void test_FBA_operand1_is_34_and_operand2_is_10_and_operand3_is_NULL(void){
@@ -137,10 +36,10 @@ void test_FBA_operand1_is_34_and_operand2_is_10_and_operand3_is_NULL(void){
 
 	extractValue_ExpectAndReturn(string,0x34);
 	extractValue_ExpectAndReturn(string,0x11);
-	extractACCESSBANKED_ExpectAndThrow(string,6);
+	extractACCESSBANKED_ExpectAndThrow(string,4);
 	value = FBA(string);
 	
-	TEST_ASSERT_EQUAL(value,0x35);
+	TEST_ASSERT_EQUAL_HEX32(value,0x234);
 }
 
 void test_FBA_operand1_is_34_and_operand2_is_10_and_operand3_is_1(void){
@@ -153,7 +52,7 @@ void test_FBA_operand1_is_34_and_operand2_is_10_and_operand3_is_1(void){
 	extractACCESSBANKED_ExpectAndReturn(string,1);
 	value = FBA(string);
 	
-	TEST_ASSERT_EQUAL(value,0x36);
+	TEST_ASSERT_EQUAL_HEX32(value,0x334);
 }
 
 
