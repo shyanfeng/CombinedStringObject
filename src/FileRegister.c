@@ -5,7 +5,7 @@
 
 unsigned char fileRegisters[4096];
 
-int findActualFileRegister(int address, int access){
+int getFileRegData(int address, int access){
 	int data;
 	int actualAddress;
 	
@@ -28,23 +28,15 @@ int findActualFileRegister(int address, int access){
 	return data;
 }
 
-int getFileRegData(int address, int access){
-	int data;
-	
-	data = findActualFileRegister(address, access);
-	
-	return data;
-
-}
-
 int setFileRegData(int address, int access, int data){
-	
+
+}
+
+int findActualFileRegister(int address, int access){
 
 
 
 }
-
-
 
 void clearAllFileRegisters(unsigned int fileRegisters){
 
