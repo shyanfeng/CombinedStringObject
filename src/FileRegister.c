@@ -49,7 +49,7 @@ int findActualFileRegister(int address, int access){
 
 }
 
-void clearAllFileRegisters(unsigned int fileRegisters){
+void clearAllFileRegisters(unsigned char fileRegisters){
 
 	fileRegisters = 0;
 
