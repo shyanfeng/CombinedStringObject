@@ -35,13 +35,26 @@ int findActualFileRegister(int address, int access){
 	if(access == 0){
 		if((address >= 0x00 && address <= 0x7f) || (address >= 0xf80 && address <= 0xfff)){
 			return address;
+		}else{
+			address = address & 0xff;
+			if((address >= 0x00 && address <= 0x7f) || (address >= 0xf80 && address <= 0xfff)){
+				return address;
+			}else{
+				address = address + (0xf<<8);
+			}
 		}
 	}else{
 		if(fileRegisters[BSR] >= 0x0 && fileRegisters[BSR] <= 0x15){
 			if((address >= 0x80 && address <= 0xf79)){
 				actualAddress = ((fileRegisters[BSR] & 0x0f)<<8) + (address & 0xff);
 				return actualAddress;
+			}else{
+				actualAddress = ((fileRegisters[BSR] & 0x0f)<<8) + (address & 0xff);
+				return actualAddress;
 			}
+		}else{
+			actualAddress = ((fileRegisters[BSR] & 0x0f)<<8) + (address & 0xff);
+			return actualAddress;
 		}
 	}
 	
@@ -49,8 +62,11 @@ int findActualFileRegister(int address, int access){
 
 }
 
-void clearAllFileRegisters(unsigned char fileRegisters){
-
-	fileRegisters = 0;
-
+void clearAllFileRegisters(){
+	int i;
+	
+	for(i = 0; i < 4096; i++){
+		fileRegisters[i] = 0;
+	}
+	
 }

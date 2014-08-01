@@ -7,6 +7,6 @@ extern unsigned char fileRegisters[4096];
 int getFileRegData(int address, int access);
 int setFileRegData(int address, int access, int data);
 int findActualFileRegister(int address, int access);
-void clearAllFileRegisters(unsigned char fileRegisters);
+void clearAllFileRegisters();
 
 #endif //_FILE_REGISTER_H_
