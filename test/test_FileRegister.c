@@ -69,6 +69,19 @@ void test_findActualFileRegister_over_range_after_mask_still_over_range_should_r
 
 }
 
+void test_findActualFileRegister_BSR_is_0_should_return_actual_address_0x86_when_access_is_1(){
+	int address;
+	
+	clearAllFileRegisters(fileRegisters);
+	
+	fileRegisters[BSR] = 0x0;
+	address = findActualFileRegister(0x86, 1);
+	printf("%x", address);
+	
+	TEST_ASSERT_EQUAL(0x86, address);
+
+}
+
 void test_findActualFileRegister_BSR_should_return_actual_address_0x856_when_access_is_1(){
 	int address;
 	
@@ -133,6 +146,19 @@ void test_findActualFileRegister_BSR_0x7_with_address_0xff90_should_return_actua
 	TEST_ASSERT_EQUAL(0x790, address);
 
 }
+
+/*void test_findActualFileRegister_BSR_0x7_with_address_0xf88_should_return_actual_address_0xf88_when_access_is_1(){
+	int address;
+	
+	clearAllFileRegisters(fileRegisters);
+	
+	fileRegisters[BSR] = 0x7;
+	address = findActualFileRegister(0xf88, 1);
+	printf("%x", address);
+	
+	TEST_ASSERT_EQUAL(0xf88, address);
+
+}*/
 
 void test_getFileRegData_should_get_data_from_address_in_file_register(){
 	int data;
